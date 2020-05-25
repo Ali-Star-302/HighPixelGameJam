@@ -474,6 +474,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerText: {fileID: 352981711}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!54 &1351398307
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -483,7 +486,7 @@ Rigidbody:
   m_GameObject: {fileID: 1351398305}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 1
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -577,8 +580,8 @@ GameObject:
   - component: {fileID: 1627332216}
   - component: {fileID: 1627332215}
   - component: {fileID: 1627332214}
-  m_Layer: 0
-  m_Name: Plane
+  m_Layer: 8
+  m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

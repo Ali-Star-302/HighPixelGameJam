@@ -8,9 +8,12 @@ public class HittyBall : MonoBehaviour
     Quaternion originalRotation;
     public Text powerText;
     int power = 0;
+    public LayerMask groundLayer;
+    Rigidbody rb;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         originalRotation = transform.rotation;
     }
 
@@ -36,12 +39,42 @@ public class HittyBall : MonoBehaviour
         }
 
         powerText.text = "Power: " + power;
+
+        if (power >= 100)
+        {
+            power = 100;
+        }
     }
 
     void HitBall()
     {
         transform.rotation = originalRotation;
-        transform.GetComponent<Rigidbody>().AddRelativeForce(-transform.forward * ((int)(power/100)),ForceMode.Impulse);
+        rb.AddRelativeForce(-transform.forward * power,ForceMode.Impulse);
         power = 0;
+    }
+
+    /*private void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.layer == groundLayer)
+        {
+            rb.drag = 3;
+        }
+        else
+        {
+            rb.drag = 0;
+        }
+    }*/
+
+    private void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.layer == groundLayer)
+        {
+            rb.drag = 3;
+            Debug.Log("");
+        }
+        else
+        {
+            rb.drag = 0;
+        }
     }
 }
