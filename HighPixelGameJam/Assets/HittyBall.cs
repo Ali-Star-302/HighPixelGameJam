@@ -13,68 +13,53 @@ public class HittyBall : MonoBehaviour
 
     private void Start()
     {
+        Physics.gravity *= 2;
         rb = GetComponent<Rigidbody>();
         originalRotation = transform.rotation;
     }
 
     void Update()
     {
-        if (Input.GetKeyDown("a"))
+        if (Input.GetKey("d"))
         {
-            transform.Rotate(0, 1, 0);
+            transform.Rotate(0, 2, 0);
         }
-        if (Input.GetKeyDown("d"))
+        if (Input.GetKey("a"))
         {
-            transform.Rotate(0, -1, 0);
+            transform.Rotate(0, -2, 0);
         }
 
         if (Input.GetButton("Jump"))
         {
             power += 1;
-            Debug.Log("Pressed");
-        }else if (Input.GetButtonUp("Jump"))
+        }
+        else if (Input.GetButtonUp("Jump"))
         {
             HitBall();
-            Debug.Log("Unpressed");
         }
 
         powerText.text = "Power: " + power;
 
         if (power >= 100)
         {
-            power = 100;
+            power = 99;
+        }
+
+        if (Physics.Raycast(transform.position,Vector3.down, 1f, groundLayer))
+        {
+            rb.drag = 0.1f;
+        }
+        else
+        {
+            rb.drag = 0f;
         }
     }
 
     void HitBall()
     {
         transform.rotation = originalRotation;
-        rb.AddRelativeForce(-transform.forward * power,ForceMode.Impulse);
+        rb.AddRelativeForce(transform.forward * ((int)(power*1.2)),ForceMode.Impulse);
+        Debug.Log(((int)(power * 1.2)));
         power = 0;
-    }
-
-    /*private void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.layer == groundLayer)
-        {
-            rb.drag = 3;
-        }
-        else
-        {
-            rb.drag = 0;
-        }
-    }*/
-
-    private void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.layer == groundLayer)
-        {
-            rb.drag = 3;
-            Debug.Log("");
-        }
-        else
-        {
-            rb.drag = 0;
-        }
     }
 }
