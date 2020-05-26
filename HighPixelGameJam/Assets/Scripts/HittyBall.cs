@@ -10,6 +10,7 @@ public class HittyBall : MonoBehaviour
     int power = 0;
     public LayerMask groundLayer;
     Rigidbody rb;
+    public GameObject Cam;
 
     private void Start()
     {
@@ -20,6 +21,7 @@ public class HittyBall : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetKey("d"))
         {
             transform.Rotate(0, 2, 0);
@@ -28,7 +30,7 @@ public class HittyBall : MonoBehaviour
         {
             transform.Rotate(0, -2, 0);
         }
-
+        */
         if (Input.GetButton("Jump"))
         {
             power += 1;
@@ -57,8 +59,12 @@ public class HittyBall : MonoBehaviour
 
     void HitBall()
     {
-        transform.rotation = originalRotation;
-        rb.AddRelativeForce(transform.forward * ((int)(power*1.2)),ForceMode.Impulse);
+        Vector3 newRot = Cam.transform.rotation * new Vector3(0,0,1);
+
+        //transform.rotation = Quaternion.Euler(newRot);
+        Vector3 newForce = newRot * ((int)(power * 1.2));
+        newForce.y = 0;
+        rb.AddForce(newForce,ForceMode.Impulse);
         Debug.Log(((int)(power * 1.2)));
         power = 0;
     }
