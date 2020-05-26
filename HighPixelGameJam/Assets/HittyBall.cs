@@ -21,6 +21,7 @@ public class HittyBall : MonoBehaviour
 
     void Update()
     {
+        /*
         if (Input.GetKey("d"))
         {
             transform.Rotate(0, 2, 0);
@@ -29,7 +30,7 @@ public class HittyBall : MonoBehaviour
         {
             transform.Rotate(0, -2, 0);
         }
-
+        */
         if (Input.GetButton("Jump"))
         {
             power += 1;

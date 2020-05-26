@@ -229,6 +229,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ball: {fileID: 1351398305}
+  cam: {fileID: 1941033951}
+  rotationSpeed: 1
+  baseOffset: {x: 0, y: 30, z: 10}
 --- !u!4 &497910867
 Transform:
   m_ObjectHideFlags: 0
@@ -1583,10 +1586,8 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1941033948}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bcc301abcd2ff154c8bcb89cff2f9fd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 1
-  Ball: {fileID: 1351398311}
