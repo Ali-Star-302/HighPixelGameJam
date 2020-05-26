@@ -25,7 +25,7 @@ public class CameraRigScript : MonoBehaviour
     void LateUpdate()
     {
         float input = Input.GetAxisRaw("PanRight") - Input.GetAxisRaw("PanLeft");
-        offset = Quaternion.AngleAxis(-input * rotationSpeed, Vector3.up) * offset;
+        offset = Quaternion.AngleAxis(input * rotationSpeed, Vector3.up) * offset;
         cam.transform.position = Ball.transform.position + offset;
         cam.transform.LookAt(Ball.transform.position);
     }
