@@ -136,7 +136,7 @@ PrefabInstance:
     - target: {fileID: 1971549911088225191, guid: ea8292e279252dd40ad9ce370bc561cf,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0.555
       objectReference: {fileID: 0}
     - target: {fileID: 1971549911088225191, guid: ea8292e279252dd40ad9ce370bc561cf,
         type: 3}
@@ -187,6 +187,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Golf Ball
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726374425650246401, guid: ea8292e279252dd40ad9ce370bc561cf,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3726374425650246401, guid: ea8292e279252dd40ad9ce370bc561cf,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7209939426235377292, guid: ea8292e279252dd40ad9ce370bc561cf,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8158307428173405622, guid: ea8292e279252dd40ad9ce370bc561cf,
         type: 3}

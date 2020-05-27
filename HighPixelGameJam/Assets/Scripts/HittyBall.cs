@@ -16,6 +16,8 @@ public class HittyBall : MonoBehaviour
     float power = 0f;
     bool powerUp = true;
     int maxPower = 100;
+    bool stationary = true;
+    GameObject arrow;
 
     private void Start()
     {
@@ -23,10 +25,14 @@ public class HittyBall : MonoBehaviour
         Physics.gravity *= 2;
         rb = GetComponent<Rigidbody>();
         originalRotation = transform.rotation;
+        arrow = transform.GetChild(0).gameObject;
     }
 
     void Update()
     {
+        if (rb.velocity == Vector3.zero)
+            stationary = true;
+
         if (powerUp && power >= maxPower)
         {
             powerUp = false;
@@ -36,14 +42,14 @@ public class HittyBall : MonoBehaviour
             powerUp = true;
         }
 
-        if (Input.GetButton("Jump") && rb.velocity == Vector3.zero)
+        if (Input.GetButton("Jump") && stationary)
         {
             if (powerUp)
                 power += 0.5f;
             else
                 power -= 0.5f;
         }
-        else if (Input.GetButtonUp("Jump") && rb.velocity == Vector3.zero)
+        else if (Input.GetButtonUp("Jump") && stationary)
         {
             HitBall();
         }
@@ -69,6 +75,11 @@ public class HittyBall : MonoBehaviour
         else
         {
             rb.drag = 0f;
+        }
+
+        if (stationary)
+        {
+            //do the aiming
         }
     }
 
