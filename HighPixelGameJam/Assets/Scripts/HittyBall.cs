@@ -5,15 +5,21 @@ using UnityEngine.UI;
 
 public class HittyBall : MonoBehaviour
 {
-    Quaternion originalRotation;
-    public Text powerText;
-    int power = 0;
+    public Text strokeCountText;
     public LayerMask groundLayer;
-    Rigidbody rb;
     public GameObject Cam;
+    public int strokeCount;
+    public PowerBar powerBar;
+
+    Quaternion originalRotation;
+    Rigidbody rb;
+    float power = 0f;
+    bool powerUp = true;
+    int maxPower = 100;
 
     private void Start()
     {
+        powerBar.SetMaxPower(maxPower);
         Physics.gravity *= 2;
         rb = GetComponent<Rigidbody>();
         originalRotation = transform.rotation;
@@ -21,35 +27,44 @@ public class HittyBall : MonoBehaviour
 
     void Update()
     {
-        /*
-        if (Input.GetKey("d"))
+        if (powerUp && power >= maxPower)
         {
-            transform.Rotate(0, 2, 0);
+            powerUp = false;
         }
-        if (Input.GetKey("a"))
+        else if (!powerUp && power <= 0)
         {
-            transform.Rotate(0, -2, 0);
+            powerUp = true;
         }
-        */
-        if (Input.GetButton("Jump"))
+
+        if (Input.GetButton("Jump") && rb.velocity == Vector3.zero)
         {
-            power += 1;
+            if (powerUp)
+                power += 0.5f;
+            else
+                power -= 0.5f;
         }
-        else if (Input.GetButtonUp("Jump"))
+        else if (Input.GetButtonUp("Jump") && rb.velocity == Vector3.zero)
         {
             HitBall();
         }
-
-        powerText.text = "Power: " + power;
-
-        if (power >= 100)
-        {
-            power = 99;
-        }
+        strokeCountText.text = "Count: " + strokeCount;
+        powerBar.SetPower((int)power);
 
         if (Physics.Raycast(transform.position,Vector3.down, 1f, groundLayer))
         {
-            rb.drag = 0.1f;
+            if (rb.velocity.sqrMagnitude < 1)
+            {
+                rb.velocity = Vector3.zero;
+                transform.rotation = Quaternion.identity;
+            }
+            else if(rb.velocity.sqrMagnitude < 12)
+            {
+                rb.drag = 1f;
+            }
+            else
+            {
+                rb.drag = 0.1f;
+            }
         }
         else
         {
@@ -65,7 +80,7 @@ public class HittyBall : MonoBehaviour
         Vector3 newForce = newRot * ((int)(power * 1.2));
         newForce.y = 0;
         rb.AddForce(newForce,ForceMode.Impulse);
-        Debug.Log(((int)(power * 1.2)));
         power = 0;
+        strokeCount++;
     }
 }

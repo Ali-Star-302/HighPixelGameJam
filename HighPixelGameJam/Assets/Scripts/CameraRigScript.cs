@@ -4,19 +4,40 @@ using UnityEngine;
 
 public class CameraRigScript : MonoBehaviour
 {
-    // Start is called before the first frame update
     public GameObject Ball;
     public Camera cam;
 
     public float rotationSpeed = 2f;
     private Vector3 offset;
     public Vector3 baseOffset = new Vector3(0, 30, 20);
+    public int rotationSpeedDelay;
+
+    int counter = 0;
+    float defaultRotationSpeed;
+
     void Start()
     {
         offset = Ball.transform.position + baseOffset;
+        defaultRotationSpeed = rotationSpeed;
     }
 
-    // Update is called once per frame
+    private void Update()
+    {
+        if (Input.GetKey("a") || Input.GetKey("d"))
+            counter++;
+        else
+        {
+            counter = 0;
+            rotationSpeed = defaultRotationSpeed;
+        }
+
+        if (counter > rotationSpeedDelay && rotationSpeed < 1.5f)
+        {
+            rotationSpeed += 0.005f;
+        }
+        //Debug.Log("C: " + counter + " R: " + rotationSpeed);
+    }
+
     void FixedUpdate()
     {
         this.transform.position = Ball.transform.position;
