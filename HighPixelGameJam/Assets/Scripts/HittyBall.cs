@@ -18,20 +18,40 @@ public class HittyBall : MonoBehaviour
     int maxPower = 100;
     bool stationary = true;
     GameObject arrow;
-
+    public Image arrowBody;
+    public Image arrowHead;
+    public float barMultiplier = 0.5f;
+    public float arrowWidth = 5f;
     private void Start()
     {
         powerBar.SetMaxPower(maxPower);
         Physics.gravity *= 2;
         rb = GetComponent<Rigidbody>();
         originalRotation = transform.rotation;
-        arrow = transform.GetChild(0).gameObject;
+        //arrow = transform.GetChild(0).gameObject;
+        arrow = GameObject.FindGameObjectWithTag("Aiming Arrow");
     }
 
     void Update()
     {
+        
         if (rb.velocity == Vector3.zero)
+        {
             stationary = true;
+            arrowHead.enabled = true;
+            arrowBody.enabled = true;
+            arrow.SetActive(true);
+            
+        }
+        else
+        {
+            stationary = false;
+            arrowHead.enabled = false;
+            arrowBody.enabled = false;
+            arrow.SetActive(false);
+        }
+        
+
 
         if (powerUp && power >= maxPower)
         {
@@ -76,17 +96,30 @@ public class HittyBall : MonoBehaviour
         {
             rb.drag = 0f;
         }
-
         if (stationary)
         {
-            //do the aiming
+            arrowHead.enabled = true;
+            arrowBody.enabled = true;
+            arrow.SetActive(true);
+            Vector3 newLocalPos = Vector3.ClampMagnitude(Cam.transform.rotation * new Vector3(1, 0, 0), 1) * 15;
+            arrow.transform.position = this.transform.position + newLocalPos;
+            arrow.transform.RotateAround(this.transform.position, Vector3.up, -90f);
+            arrowBody.transform.position = this.transform.position;
+            arrowBody.transform.LookAt(arrow.transform.position);
+            arrowBody.transform.Rotate(new Vector3(90, 0, 0));
+            arrowBody.rectTransform.sizeDelta = new Vector2(arrowWidth, power * barMultiplier);
+            arrowHead.transform.localPosition = Vector3.up * ((power - 1f) * barMultiplier);
+            arrowHead.transform.LookAt(arrow.transform.position);
+            arrowHead.transform.Rotate(new Vector3(90, 0, 0));
         }
+
     }
 
     void HitBall()
     {
-        Vector3 newRot = Cam.transform.rotation * new Vector3(0,0,1);
-
+        
+        
+        Vector3 newRot = Vector3.ClampMagnitude(Cam.transform.rotation * new Vector3(0,0,1),1);
         //transform.rotation = Quaternion.Euler(newRot);
         Vector3 newForce = newRot * ((int)(power * 1.2));
         newForce.y = 0;
