@@ -22,6 +22,7 @@ public class HittyBall : MonoBehaviour
     public Image arrowHead;
     public float barMultiplier = 0.5f;
     public float arrowWidth = 5f;
+    public Gradient gradient;
     private void Start()
     {
         powerBar.SetMaxPower(maxPower);
@@ -98,7 +99,12 @@ public class HittyBall : MonoBehaviour
         }
         if (stationary)
         {
-            arrowHead.enabled = true;
+            if (power != 0)
+            {
+                arrowHead.enabled = true;
+            }
+            else
+                arrowHead.enabled = false;
             arrowBody.enabled = true;
             arrow.SetActive(true);
             Vector3 newLocalPos = Vector3.ClampMagnitude(Cam.transform.rotation * new Vector3(1, 0, 0), 1) * 15;
@@ -111,6 +117,9 @@ public class HittyBall : MonoBehaviour
             arrowHead.transform.localPosition = Vector3.up * ((power - 1f) * barMultiplier);
             arrowHead.transform.LookAt(arrow.transform.position);
             arrowHead.transform.Rotate(new Vector3(90, 0, 0));
+
+            arrowBody.color = gradient.Evaluate(power/100);
+            arrowHead.color = gradient.Evaluate(power / 100);
         }
 
     }
