@@ -45,3 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextLevel: Main
   levelToUnlock: 2
+  par: 0
+  golfBall: {fileID: 0}
+  levelCompleteUI: {fileID: 2156336157864388776, guid: 00aa938b738610f46803526b74c930e8,
+    type: 3}

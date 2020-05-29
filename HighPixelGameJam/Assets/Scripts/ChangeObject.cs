@@ -9,13 +9,21 @@ public class ChangeObject : MonoBehaviour
 
     public void NormalToParallel()
     {
-        Instantiate(parallelAsset, normalAsset.transform.position, normalAsset.transform.rotation);
-        Destroy(normalAsset);
+        GameObject newObj = Instantiate(parallelAsset, this.transform.position, this.transform.rotation);
+        ChangeObject script = newObj.AddComponent<ChangeObject>();
+        script.parallelAsset = this.parallelAsset;
+        script.normalAsset = this.normalAsset;
+        newObj.transform.SetParent(this.transform.parent);
+        Destroy(this.gameObject);
     }
 
     public void ParallelToNormal()
     {
-        Instantiate(normalAsset, parallelAsset.transform.position, parallelAsset.transform.rotation);
-        Destroy(parallelAsset);
+        GameObject newObj = Instantiate(normalAsset, this.transform.position, this.transform.rotation);
+        ChangeObject script = newObj.AddComponent<ChangeObject>();
+        script.parallelAsset = this.parallelAsset;
+        script.normalAsset = this.normalAsset;
+        newObj.transform.SetParent(this.transform.parent);
+        Destroy(this.gameObject);
     }
 }

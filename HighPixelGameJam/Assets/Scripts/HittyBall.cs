@@ -5,24 +5,30 @@ using UnityEngine.UI;
 
 public class HittyBall : MonoBehaviour
 {
+    public Image arrowBody;
+    public Image arrowHead;
+    public float barMultiplier = 0.5f;
+    public float arrowWidth = 5f;
+    public Gradient gradient;
     public Text strokeCountText;
+    public Text worldChangeText;
     public LayerMask groundLayer;
     public GameObject Cam;
     public int strokeCount;
     public PowerBar powerBar;
+    public int worldChangeDelay;
+    public int worldChangeCounter;
+    public bool isNormalWorld = true;
+    public GameObject changingObjects;
+    public bool stationary = true;
 
     Quaternion originalRotation;
     Rigidbody rb;
     float power = 0f;
     bool powerUp = true;
     int maxPower = 100;
-    bool stationary = true;
     GameObject arrow;
-    public Image arrowBody;
-    public Image arrowHead;
-    public float barMultiplier = 0.5f;
-    public float arrowWidth = 5f;
-    public Gradient gradient;
+    
     private void Start()
     {
         powerBar.SetMaxPower(maxPower);
@@ -35,14 +41,15 @@ public class HittyBall : MonoBehaviour
 
     void Update()
     {
-        
+        if (worldChangeCounter < worldChangeDelay)
+            worldChangeCounter++;
+
         if (rb.velocity == Vector3.zero)
         {
             stationary = true;
             arrowHead.enabled = true;
             arrowBody.enabled = true;
             arrow.SetActive(true);
-            
         }
         else
         {
@@ -52,7 +59,11 @@ public class HittyBall : MonoBehaviour
             arrow.SetActive(false);
         }
         
-
+        if (Input.GetKeyDown("q") && stationary && worldChangeCounter >= worldChangeDelay)
+        {
+            ChangeWorld();
+            worldChangeCounter = 0;
+        }
 
         if (powerUp && power >= maxPower)
         {
@@ -74,6 +85,7 @@ public class HittyBall : MonoBehaviour
         {
             HitBall();
         }
+        worldChangeText.text = "World change charge: " + worldChangeCounter;
         strokeCountText.text = "Count: " + strokeCount;
         powerBar.SetPower((int)power);
 
@@ -121,13 +133,25 @@ public class HittyBall : MonoBehaviour
             arrowBody.color = gradient.Evaluate(power/100);
             arrowHead.color = gradient.Evaluate(power / 100);
         }
-
     }
+
+    void ChangeWorld()
+    {
+        if (isNormalWorld)
+        {
+            changingObjects.BroadcastMessage("NormalToParallel", SendMessageOptions.DontRequireReceiver);
+            isNormalWorld = false;
+        }
+        else
+        {
+            changingObjects.BroadcastMessage("ParallelToNormal", SendMessageOptions.DontRequireReceiver);
+            isNormalWorld = true;
+        }
+    }
+
 
     void HitBall()
     {
-        
-        
         Vector3 newRot = Vector3.ClampMagnitude(Cam.transform.rotation * new Vector3(0,0,1),1);
         //transform.rotation = Quaternion.Euler(newRot);
         Vector3 newForce = newRot * ((int)(power * 1.2));

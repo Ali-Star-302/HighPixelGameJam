@@ -7,15 +7,70 @@ public class DisableObjects : MonoBehaviour
     [Tooltip("0 = appear in normal, 1 = appear in parallel")]
     public int world;
 
+    List<MeshRenderer> mrList = new List<MeshRenderer>();
+    List<Collider> cList = new List<Collider>();
+
+    private void Start()
+    {
+        if (GetComponent<MeshRenderer>())
+        {
+            mrList.Add(GetComponent<MeshRenderer>());
+        }
+        else
+        {
+            foreach(Transform child in this.transform)
+            {
+                if (child.GetComponent<MeshRenderer>())
+                {
+                    mrList.Add(child.GetComponent<MeshRenderer>());
+                }
+            }
+        }
+
+        if (GetComponent<Collider>())
+        {
+            cList.Add(GetComponent<Collider>());
+        }
+        else
+        {
+            foreach (Transform child in this.transform)
+            {
+                if (child.GetComponent<Collider>())
+                {
+                    cList.Add(child.GetComponent<Collider>());
+                }
+            }
+        }
+
+        if (world == 1)
+        {
+            ParallelToNormal();
+        }
+    }
+
     public void NormalToParallel()
     {
         if (world == 0)
         {
-            gameObject.SetActive(false);
+            foreach(MeshRenderer m in mrList)
+            {
+                m.enabled = false;
+            }
+            foreach (Collider c in cList)
+            {
+                c.enabled = false;
+            }
         }
         else
         {
-            gameObject.SetActive(true);
+            foreach (MeshRenderer m in mrList)
+            {
+                m.enabled = true;
+            }
+            foreach (Collider c in cList)
+            {
+                c.enabled = true;
+            }
         }
     }
 
@@ -23,11 +78,25 @@ public class DisableObjects : MonoBehaviour
     {
         if (world == 0)
         {
-            gameObject.SetActive(true);
+            foreach (MeshRenderer m in mrList)
+            {
+                m.enabled = true;
+            }
+            foreach (Collider c in cList)
+            {
+                c.enabled = true;
+            }
         }
         else
         {
-            gameObject.SetActive(false);
+            foreach (MeshRenderer m in mrList)
+            {
+                m.enabled = false;
+            }
+            foreach (Collider c in cList)
+            {
+                c.enabled = false;
+            }
         }
     }
 }

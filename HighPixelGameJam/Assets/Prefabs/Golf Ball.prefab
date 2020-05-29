@@ -124,12 +124,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strokeCountText: {fileID: 0}
+  worldChangeText: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
   Cam: {fileID: 0}
   strokeCount: 0
   powerBar: {fileID: 0}
+  worldChangeDelay: 200
+  isNormalWorld: 1
+  changingObjects: {fileID: 0}
   arrowBody: {fileID: 0}
   arrowHead: {fileID: 0}
   barMultiplier: 0.08
