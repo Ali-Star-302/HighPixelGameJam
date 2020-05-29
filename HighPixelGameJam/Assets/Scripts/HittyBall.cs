@@ -114,7 +114,7 @@ public class HittyBall : MonoBehaviour
             arrowBody.transform.LookAt(arrow.transform.position);
             arrowBody.transform.Rotate(new Vector3(90, 0, 0));
             arrowBody.rectTransform.sizeDelta = new Vector2(arrowWidth, power * barMultiplier);
-            arrowHead.transform.localPosition = Vector3.up * ((power - 1f) * barMultiplier);
+            arrowHead.transform.localPosition = Vector3.up * (power * (barMultiplier*0.96f));
             arrowHead.transform.LookAt(arrow.transform.position);
             arrowHead.transform.Rotate(new Vector3(90, 0, 0));
 
