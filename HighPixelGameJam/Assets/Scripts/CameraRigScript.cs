@@ -11,13 +11,14 @@ public class CameraRigScript : MonoBehaviour
     private Vector3 offset;
     public Vector3 baseOffset = new Vector3(0, 30, 20);
     public int rotationSpeedDelay;
+    public float maxRotSpeed = 1.5f;
 
     int counter = 0;
     float defaultRotationSpeed;
 
     void Start()
     {
-        offset = Ball.transform.position + baseOffset;
+        offset = baseOffset;
         defaultRotationSpeed = rotationSpeed;
     }
 
@@ -31,7 +32,7 @@ public class CameraRigScript : MonoBehaviour
             rotationSpeed = defaultRotationSpeed;
         }
 
-        if (counter > rotationSpeedDelay && rotationSpeed < 1.5f)
+        if (counter > rotationSpeedDelay && rotationSpeed < maxRotSpeed)
         {
             rotationSpeed += 0.005f;
         }
@@ -45,9 +46,18 @@ public class CameraRigScript : MonoBehaviour
 
     void LateUpdate()
     {
+        
         float input = Input.GetAxisRaw("PanRight") - Input.GetAxisRaw("PanLeft");
+        
         offset = Quaternion.AngleAxis(input * rotationSpeed, Vector3.up) * offset;
         cam.transform.position = Ball.transform.position + offset;
         cam.transform.LookAt(Ball.transform.position);
+        
+        /*
+        Quaternion camAngle = Quaternion.AngleAxis(input * rotationSpeed, Vector3.up);
+        offset = camAngle * offset;
+        cam.transform.position = Ball.transform.position + offset;
+        cam.transform.LookAt(Ball.transform.position);
+        */
     }
 }
