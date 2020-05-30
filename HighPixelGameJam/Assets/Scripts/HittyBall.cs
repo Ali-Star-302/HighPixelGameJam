@@ -43,6 +43,13 @@ public class HittyBall : MonoBehaviour
     {
         if (worldChangeCounter < worldChangeDelay)
             worldChangeCounter++;
+        if (isNormalWorld)
+        {
+            worldChangeText.color = Color.blue;
+        }
+        else
+            worldChangeText.color = Color.magenta;
+
 
         if (rb.velocity == Vector3.zero)
         {
