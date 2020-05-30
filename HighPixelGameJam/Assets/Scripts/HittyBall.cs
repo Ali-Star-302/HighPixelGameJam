@@ -84,9 +84,9 @@ public class HittyBall : MonoBehaviour
         if (Input.GetButton("Jump") && stationary)
         {
             if (powerUp)
-                power += 0.5f;
+                power += 0.7f;
             else
-                power -= 0.5f;
+                power -= 0.7f;
         }
         else if (Input.GetButtonUp("Jump") && stationary)
         {

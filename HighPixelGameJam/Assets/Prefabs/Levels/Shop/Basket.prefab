@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4242363469627966379}
   - component: {fileID: 1668683074571832714}
   - component: {fileID: 8311830675226696245}
+  - component: {fileID: 1824843945540037673}
   m_Layer: 0
   m_Name: Handle
   m_TagString: Untagged
@@ -79,6 +80,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &1824843945540037673
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2871855108695059888}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -6659003102834268097, guid: 600b4f1b0a8079a4a969ea7128f702c8, type: 3}
 --- !u!1 &5797142394177517778
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,6 +218,7 @@ GameObject:
   - component: {fileID: 1316765097951506738}
   - component: {fileID: 4102697439448472973}
   - component: {fileID: 5433140044808137961}
+  - component: {fileID: 2309232186403792641}
   m_Layer: 0
   m_Name: Basket
   m_TagString: Untagged
@@ -271,6 +287,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &2309232186403792641
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7493753993960754609}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5214659172218046519, guid: 600b4f1b0a8079a4a969ea7128f702c8, type: 3}
 --- !u!1 &7735900000294263780
 GameObject:
   m_ObjectHideFlags: 0

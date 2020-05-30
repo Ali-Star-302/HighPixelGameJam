@@ -8,6 +8,7 @@ public class DisableObjects : MonoBehaviour
     public int world;
 
     List<MeshRenderer> mrList = new List<MeshRenderer>();
+    List<SkinnedMeshRenderer> smrList = new List<SkinnedMeshRenderer>();
     List<Collider> cList = new List<Collider>();
 
     private void Start()
@@ -23,6 +24,10 @@ public class DisableObjects : MonoBehaviour
                 if (child.GetComponent<MeshRenderer>())
                 {
                     mrList.Add(child.GetComponent<MeshRenderer>());
+                }
+                else if (child.GetComponent<SkinnedMeshRenderer>())
+                {
+                    smrList.Add(child.GetComponent<SkinnedMeshRenderer>());
                 }
             }
         }
@@ -56,6 +61,10 @@ public class DisableObjects : MonoBehaviour
             {
                 m.enabled = false;
             }
+            foreach (SkinnedMeshRenderer sm in smrList)
+            {
+                sm.enabled = false;
+            }
             foreach (Collider c in cList)
             {
                 c.enabled = false;
@@ -66,6 +75,10 @@ public class DisableObjects : MonoBehaviour
             foreach (MeshRenderer m in mrList)
             {
                 m.enabled = true;
+            }
+            foreach (SkinnedMeshRenderer sm in smrList)
+            {
+                sm.enabled = true;
             }
             foreach (Collider c in cList)
             {
@@ -82,6 +95,10 @@ public class DisableObjects : MonoBehaviour
             {
                 m.enabled = true;
             }
+            foreach (SkinnedMeshRenderer sm in smrList)
+            {
+                sm.enabled = true;
+            }
             foreach (Collider c in cList)
             {
                 c.enabled = true;
@@ -92,6 +109,10 @@ public class DisableObjects : MonoBehaviour
             foreach (MeshRenderer m in mrList)
             {
                 m.enabled = false;
+            }
+            foreach (SkinnedMeshRenderer sm in smrList)
+            {
+                sm.enabled = false;
             }
             foreach (Collider c in cList)
             {

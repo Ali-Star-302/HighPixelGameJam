@@ -130,5 +130,6 @@ MonoBehaviour:
   Ball: {fileID: 0}
   cam: {fileID: 2737085462644299967}
   rotationSpeed: 0.2
-  baseOffset: {x: 0, y: 15, z: -15}
+  baseOffset: {x: 0, y: 6, z: 15}
   rotationSpeedDelay: 20
+  maxRotSpeed: 2

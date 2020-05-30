@@ -11,15 +11,19 @@ public class CameraRigScript : MonoBehaviour
     private Vector3 offset;
     public Vector3 baseOffset = new Vector3(0, 30, 20);
     public int rotationSpeedDelay;
-    public float maxRotSpeed = 1.5f;
+    public float maxRotSpeed = 2f;
+    public List<Transform> obstructions = new List<Transform>();
+    public List<Transform> oldObstructions = new List<Transform>();
 
     int counter = 0;
     float defaultRotationSpeed;
+    int groundLayer = 8;
 
     void Start()
     {
         offset = baseOffset;
         defaultRotationSpeed = rotationSpeed;
+        obstructions.Add(Ball.transform);
     }
 
     private void Update()
@@ -34,9 +38,8 @@ public class CameraRigScript : MonoBehaviour
 
         if (counter > rotationSpeedDelay && rotationSpeed < maxRotSpeed)
         {
-            rotationSpeed += 0.005f;
+            rotationSpeed += 0.008f;
         }
-        //Debug.Log("C: " + counter + " R: " + rotationSpeed);
     }
 
     void FixedUpdate()
@@ -46,18 +49,96 @@ public class CameraRigScript : MonoBehaviour
 
     void LateUpdate()
     {
-        
         float input = Input.GetAxisRaw("PanRight") - Input.GetAxisRaw("PanLeft");
         
-        offset = Quaternion.AngleAxis(-input * rotationSpeed, Vector3.up) * offset;
+        offset = Quaternion.AngleAxis(input * rotationSpeed, Vector3.up) * offset;
         cam.transform.position = Ball.transform.position + offset;
         cam.transform.LookAt(Ball.transform.position);
-        
-        /*
-        Quaternion camAngle = Quaternion.AngleAxis(input * rotationSpeed, Vector3.up);
+        /* Quaternion camAngle = Quaternion.AngleAxis(input * rotationSpeed, Vector3.up);
         offset = camAngle * offset;
         cam.transform.position = Ball.transform.position + offset;
-        cam.transform.LookAt(Ball.transform.position);
-        */
+        cam.transform.LookAt(Ball.transform.position); */
+        ViewObstructed();
+    }
+
+    void ViewObstructed()
+    {
+        RaycastHit hit;
+        Vector3 dir = Ball.transform.position - cam.transform.position;
+        List<MeshRenderer> mrList = new List<MeshRenderer>();
+        List<SkinnedMeshRenderer> smrList = new List<SkinnedMeshRenderer>();
+
+        if (Physics.Raycast(cam.transform.position, dir, out hit, 20f, ~groundLayer))
+        {
+            if (hit.collider.gameObject.tag != "Ball")
+            {
+                if (!obstructions.Contains(hit.transform))
+                    obstructions.Add(hit.transform);
+
+                /*if (obstructions.Count > 1)
+                {
+                    if (obstructions[0].gameObject.GetComponent<MeshRenderer>())
+                        obstructions[0].gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                    else
+                    {
+                        foreach (Transform child in obstructions[0])
+                        {
+                            if (child.GetComponent<MeshRenderer>())
+                            {
+                                child.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                            }
+                            else if (child.GetComponent<SkinnedMeshRenderer>())
+                            {
+                                child.GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                            }
+                        }
+                    }
+                    obstructions.RemoveAt(0);
+                }*/
+
+                if (hit.collider.gameObject.GetComponent<MeshRenderer>())
+                {
+                    hit.collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                }
+                else  //Goes through all children, disabling their mesh renderers
+                {
+                    foreach (Transform child in hit.transform)
+                    {
+                        if (child.GetComponent<MeshRenderer>())
+                        {
+                            child.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                        }
+                        else if (child.GetComponent<SkinnedMeshRenderer>())
+                        {
+                            child.GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (Transform t in obstructions)
+                {
+                    if (t.gameObject.GetComponent<MeshRenderer>())
+                        t.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                    else  //Goes through all children, enabling their mesh renderers
+                    {
+                        foreach (Transform child in t)
+                        {
+                            if (child.GetComponent<MeshRenderer>())
+                            {
+                                child.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                            }
+                            else if (child.GetComponent<SkinnedMeshRenderer>())
+                            {
+                                child.GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                            }
+                        }
+                    }
+                }
+                obstructions.Clear();
+            }
+            
+        }
     }
 }

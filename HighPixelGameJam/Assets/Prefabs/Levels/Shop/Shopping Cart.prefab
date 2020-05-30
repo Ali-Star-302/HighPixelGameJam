@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2698975124282078626}
-  - component: {fileID: 6921499767761058280}
   m_Layer: 0
   m_Name: Shopping Cart
   m_TagString: Untagged
@@ -25,8 +24,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1382594414955988913}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 30.97, y: 12.07, z: 29.430197}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalPosition: {x: -371.393, y: 27.573997, z: 1168.4432}
+  m_LocalScale: {x: 3, y: 3, z: 2.7}
   m_Children:
   - {fileID: 1024417195880386040}
   - {fileID: 6473811551497167381}
@@ -45,22 +44,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &6921499767761058280
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1382594414955988913}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &1542175116513296822
 GameObject:
   m_ObjectHideFlags: 0
