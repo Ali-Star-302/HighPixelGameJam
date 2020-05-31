@@ -21,7 +21,7 @@ public class SettingsController : MonoBehaviour
         else
             InvertLookToggle.isOn = true;
 
-        camHeight = PlayerPrefs.GetFloat("CameraHeight", 30f);
+        camHeight = PlayerPrefs.GetFloat("CameraHeight", 10f);
         camHeightSlider.value = camHeight;
 
         camWidth = PlayerPrefs.GetFloat("CameraWidth", 20f);

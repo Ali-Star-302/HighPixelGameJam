@@ -25,7 +25,7 @@ public class CameraRigScript : MonoBehaviour
     void Start()
     {
         invertLook = PlayerPrefs.GetInt("InvertLook", 0);
-        baseOffset = new Vector3(0, PlayerPrefs.GetFloat("CameraHeight", 30f), PlayerPrefs.GetFloat("CameraWidth", 20f));
+        baseOffset = new Vector3(0, PlayerPrefs.GetFloat("CameraHeight", 10f), PlayerPrefs.GetFloat("CameraWidth", 20f));
 
         offset = baseOffset;
         defaultRotationSpeed = rotationSpeed;
