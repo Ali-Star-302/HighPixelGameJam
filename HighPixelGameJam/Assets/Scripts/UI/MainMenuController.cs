@@ -10,6 +10,11 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("Level Select");
     }
 
+    public void GoToSettings()
+    {
+        SceneManager.LoadScene("Settings");
+    }
+
     public void Exit()
     {
         Application.Quit();
