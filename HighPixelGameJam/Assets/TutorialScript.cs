@@ -28,7 +28,7 @@ public class TutorialScript : MonoBehaviour
         if (Input.GetKeyDown("q") && stationary && worldChangeCounter >= worldChangeDelay && tutorialCounter == 1)
         {
             obstacleText.CrossFadeAlpha(1, 1, true);
-            obstacleText.text = "Well done, now finish the hole.";
+            obstacleText.text = "Well done, now finish the hole. If you need to reset your shot, press R.";
             tutorialCounter = 2;
             StartCoroutine(WaitThenFade());
         }

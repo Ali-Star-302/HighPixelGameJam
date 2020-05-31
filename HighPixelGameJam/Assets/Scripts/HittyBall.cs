@@ -5,17 +5,19 @@ using UnityEngine.UI;
 
 public class HittyBall : MonoBehaviour
 {
+    public Sprite normalToParallelImage;
+    public Sprite parallelToNormalImage;
     public Image arrowBody;
     public Image arrowHead;
     public float barMultiplier = 0.5f;
     public float arrowWidth = 5f;
     public Gradient gradient;
     public Text strokeCountText;
-    public Text worldChangeText;
     public LayerMask groundLayer;
     public GameObject Cam;
     public int strokeCount;
     public PowerBar powerBar;
+    public WorldChangeBar worldChangeBar;
     public int worldChangeDelay;
     public int worldChangeCounter;
     public bool isNormalWorld = true;
@@ -31,6 +33,7 @@ public class HittyBall : MonoBehaviour
     
     private void Start()
     {
+        worldChangeBar.SetMaxCharge(worldChangeDelay);
         powerBar.SetMaxPower(maxPower);
         Physics.gravity *= 2;
         rb = GetComponent<Rigidbody>();
@@ -41,16 +44,8 @@ public class HittyBall : MonoBehaviour
 
     void Update()
     {
-        if (worldChangeCounter < worldChangeDelay)
-            worldChangeCounter++;
-        if (isNormalWorld)
-        {
-            worldChangeText.color = Color.blue;
-        }
-        else
-            worldChangeText.color = Color.magenta;
 
-
+        //Stationary/not stationary
         if (rb.velocity == Vector3.zero)
         {
             stationary = true;
@@ -66,12 +61,14 @@ public class HittyBall : MonoBehaviour
             arrow.SetActive(false);
         }
         
+        //Change world
         if (Input.GetKeyDown("q") && stationary && worldChangeCounter >= worldChangeDelay)
         {
             ChangeWorld();
             worldChangeCounter = 0;
         }
 
+        //Power and hitting
         if (powerUp && power >= maxPower)
         {
             powerUp = false;
@@ -92,10 +89,25 @@ public class HittyBall : MonoBehaviour
         {
             HitBall();
         }
-        worldChangeText.text = "World change charge: " + worldChangeCounter;
+        //UI updates
+        if (worldChangeCounter < worldChangeDelay)
+            worldChangeCounter++;
+
         strokeCountText.text = "Count: " + strokeCount;
         powerBar.SetPower((int)power);
+        worldChangeBar.SetCharge((int)worldChangeCounter);
 
+        if (isNormalWorld)
+            worldChangeBar.worldImage.sprite = normalToParallelImage;
+        else
+            worldChangeBar.worldImage.sprite = parallelToNormalImage;
+
+        if (stationary)
+            worldChangeBar.stationary = true;
+        else
+            worldChangeBar.stationary = false;
+
+        //Drag calculations
         if (Physics.Raycast(transform.position,Vector3.down, 1f, groundLayer))
         {
             if (rb.velocity.sqrMagnitude < 1)
@@ -116,6 +128,8 @@ public class HittyBall : MonoBehaviour
         {
             rb.drag = 0f;
         }
+
+        //Arrows
         if (stationary)
         {
             if (power != 0)

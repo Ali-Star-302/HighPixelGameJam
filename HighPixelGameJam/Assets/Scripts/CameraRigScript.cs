@@ -75,27 +75,6 @@ public class CameraRigScript : MonoBehaviour
                 if (!obstructions.Contains(hit.transform))
                     obstructions.Add(hit.transform);
 
-                /*if (obstructions.Count > 1)
-                {
-                    if (obstructions[0].gameObject.GetComponent<MeshRenderer>())
-                        obstructions[0].gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                    else
-                    {
-                        foreach (Transform child in obstructions[0])
-                        {
-                            if (child.GetComponent<MeshRenderer>())
-                            {
-                                child.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                            }
-                            else if (child.GetComponent<SkinnedMeshRenderer>())
-                            {
-                                child.GetComponent<SkinnedMeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                            }
-                        }
-                    }
-                    obstructions.RemoveAt(0);
-                }*/
-
                 if (hit.collider.gameObject.GetComponent<MeshRenderer>())
                 {
                     hit.collider.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;

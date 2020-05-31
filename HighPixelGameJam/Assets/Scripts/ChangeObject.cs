@@ -8,10 +8,9 @@ public class ChangeObject : MonoBehaviour
     public GameObject parallelAsset;
     public Vector3 normalAssetScale;
     public Vector3 parallelAssetScale;
-    public Vector3 normalAssetOffset;
-    public Vector3 parallelAssetOffset;
     public bool isParallelAlready = false;
-    public Vector3 defaultPosition;
+
+    Vector3 defaultPosition;
     bool isFirst = true;
 
     private void Start()
@@ -19,7 +18,6 @@ public class ChangeObject : MonoBehaviour
         if (isFirst)
         {
             defaultPosition = transform.position;
-            Debug.Log("a");
         }
             
         if (normalAssetScale == Vector3.zero)
@@ -32,10 +30,9 @@ public class ChangeObject : MonoBehaviour
     {
         GameObject newObj = Instantiate(parallelAsset, this.transform.position, this.transform.rotation);
 
-        //Move/scale new object
+        //Move/scale/rotate new object
         if (parallelAssetScale != Vector3.zero)
             newObj.transform.localScale = parallelAssetScale;
-        newObj.transform.position = (defaultPosition += parallelAssetOffset);
 
         //Set script variables
         ChangeObject script = newObj.AddComponent<ChangeObject>();
@@ -43,9 +40,6 @@ public class ChangeObject : MonoBehaviour
         script.normalAsset = this.normalAsset;
         script.normalAssetScale = this.normalAssetScale;
         script.parallelAssetScale = this.parallelAssetScale;
-        script.normalAssetOffset = this.normalAssetOffset;
-        script.parallelAssetOffset = this.parallelAssetOffset;
-        script.defaultPosition = this.defaultPosition;
         script.isFirst = false;
 
         newObj.transform.SetParent(this.transform.parent);
@@ -59,7 +53,6 @@ public class ChangeObject : MonoBehaviour
         //Move/scale new object
         if (normalAssetScale != Vector3.zero)
             newObj.transform.localScale = normalAssetScale;
-        newObj.transform.position += (defaultPosition += normalAssetOffset);
 
         //Set script variables
         ChangeObject script = newObj.AddComponent<ChangeObject>();
@@ -67,8 +60,6 @@ public class ChangeObject : MonoBehaviour
         script.normalAsset = this.normalAsset;
         script.normalAssetScale = this.normalAssetScale;
         script.parallelAssetScale = this.parallelAssetScale;
-        script.normalAssetOffset = this.normalAssetOffset;
-        script.parallelAssetOffset = this.parallelAssetOffset;
         script.defaultPosition = this.defaultPosition;
         script.isFirst = false;
 
