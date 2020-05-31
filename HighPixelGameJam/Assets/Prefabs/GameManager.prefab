@@ -46,6 +46,10 @@ MonoBehaviour:
   nextLevel: Main
   levelToUnlock: 2
   par: 0
+  targetTime: 0
+  targetSwitches: 0
   golfBall: {fileID: 0}
   levelCompleteUI: {fileID: 2156336157864388776, guid: 00aa938b738610f46803526b74c930e8,
     type: 3}
+  filledStar: {fileID: 21300000, guid: c5c7e786823a5f54587da41b1621b9b8, type: 3}
+  unfilledStar: {fileID: 21300000, guid: a57a35accdbae5f48a77dc69858842b1, type: 3}

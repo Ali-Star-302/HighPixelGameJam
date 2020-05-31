@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ball
   - Aiming Arrow
+  - Platform
   layers:
   - Default
   - TransparentFX

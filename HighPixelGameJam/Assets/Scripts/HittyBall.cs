@@ -15,6 +15,7 @@ public class HittyBall : MonoBehaviour
     public Gradient gradient;
     public Text strokeCountText;
     public Text timerText;
+    public Text switchesText;
     public LayerMask groundLayer;
     public GameObject Cam;
     public int strokeCount;
@@ -26,6 +27,7 @@ public class HittyBall : MonoBehaviour
     public GameObject changingObjects;
     public bool stationary = true;
     public float levelTime;
+    public int worldSwitches;
 
     Quaternion originalRotation;
     Rigidbody rb;
@@ -60,10 +62,6 @@ public class HittyBall : MonoBehaviour
         if (paused)
             return;
 
-        //Timer
-        levelTime = (Time.time - levelStartTime);
-        timerText.text = "Time: " + (int)(levelTime) + "s";
-
         //Stationary/not stationary
         if (rb.velocity.sqrMagnitude <= 1)
         {
@@ -71,7 +69,7 @@ public class HittyBall : MonoBehaviour
             arrowHead.enabled = true;
             arrowBody.enabled = true;
             arrow.SetActive(true);
-            lastPosition = transform.position;
+            SetLastPosition();
         }
         else
         {
@@ -84,6 +82,7 @@ public class HittyBall : MonoBehaviour
         //Change world
         if (Input.GetKeyDown("q") && stationary && worldChangeCounter >= worldChangeDelay)
         {
+            worldSwitches++;
             ChangeWorld();
             worldChangeCounter = 0;
         }
@@ -100,6 +99,18 @@ public class HittyBall : MonoBehaviour
         DisplayArrows();
     }
     
+    void SetLastPosition()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 20f))
+        {
+            if (!(hit.transform.gameObject.tag == "Platform"))
+            {
+                lastPosition = transform.position;
+            }
+        }
+    }
+
     void HitBall()
     {
         Vector3 newRot = Vector3.ClampMagnitude(Cam.transform.rotation * new Vector3(0,0,1),1);
@@ -150,10 +161,15 @@ public class HittyBall : MonoBehaviour
 
     void UI()
     {
+        //Timer
+        levelTime = (Time.time - levelStartTime);
+        timerText.text = "Time: " + (int)(levelTime) + "s";
+
         if (worldChangeCounter < worldChangeDelay)
             worldChangeCounter++;
 
-        strokeCountText.text = "Count: " + strokeCount;
+        strokeCountText.text = "Strokes: " + strokeCount;
+        switchesText.text = "Duality Switches: " + worldSwitches;
         powerBar.SetPower((int)power);
         worldChangeBar.SetCharge((int)worldChangeCounter);
 
@@ -182,9 +198,9 @@ public class HittyBall : MonoBehaviour
         if (Input.GetButton("Jump") && stationary)
         {
             if (powerUp)
-                power += 0.7f;
+                power += 0.7f * 100 * Time.deltaTime;
             else
-                power -= 0.7f;
+                power -= 0.7f * 100 * Time.deltaTime;
         }
         else if (Input.GetButtonUp("Jump") && stationary)
         {

@@ -39,7 +39,7 @@ public class CameraRigScript : MonoBehaviour
 
         if (counter > rotationSpeedDelay && rotationSpeed < maxRotSpeed)
         {
-            rotationSpeed += rotationAcceleration;
+            rotationSpeed += rotationAcceleration * 100 * Time.deltaTime;
         }
     }
 

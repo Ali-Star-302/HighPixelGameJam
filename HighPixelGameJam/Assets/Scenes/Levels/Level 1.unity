@@ -137,17 +137,17 @@ PrefabInstance:
     - target: {fileID: 7848723303905767524, guid: 2e94f38fa7a9c89469a50ee3775c87e0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -216.1
+      value: -203.99
       objectReference: {fileID: 0}
     - target: {fileID: 7848723303905767524, guid: 2e94f38fa7a9c89469a50ee3775c87e0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.563
+      value: 0.034
       objectReference: {fileID: 0}
     - target: {fileID: 7848723303905767524, guid: 2e94f38fa7a9c89469a50ee3775c87e0,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 286.2
+      value: 288.02
       objectReference: {fileID: 0}
     - target: {fileID: 7848723303905767524, guid: 2e94f38fa7a9c89469a50ee3775c87e0,
         type: 3}
@@ -1070,7 +1070,7 @@ GameObject:
   - component: {fileID: 235509875}
   m_Layer: 8
   m_Name: Normal Square 1
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1461,7 +1461,7 @@ GameObject:
   - component: {fileID: 292954639}
   m_Layer: 8
   m_Name: Parallel Square 2
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2326,6 +2326,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   world: 1
+--- !u!114 &536667464 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3753262620628061983, guid: e03be2793dc838d43ac6aa1ae73f10ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 583844118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &537021495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2684,11 +2696,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6641967773321565411, guid: e03be2793dc838d43ac6aa1ae73f10ad,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -150
       objectReference: {fileID: 0}
     - target: {fileID: 6641967774158104221, guid: e03be2793dc838d43ac6aa1ae73f10ad,
         type: 3}
@@ -5160,6 +5167,11 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 390671546}
+    - target: {fileID: 8158307428173405622, guid: ea8292e279252dd40ad9ce370bc561cf,
+        type: 3}
+      propertyPath: switchesText
+      value: 
+      objectReference: {fileID: 536667464}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea8292e279252dd40ad9ce370bc561cf, type: 3}
 --- !u!1 &1286265246 stripped
@@ -5223,7 +5235,7 @@ GameObject:
   - component: {fileID: 1315092947}
   m_Layer: 8
   m_Name: Parallel Square 1
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5918,12 +5930,22 @@ PrefabInstance:
     - target: {fileID: 1783849370952907231, guid: 3ef2e3826c2c08b47912ccfdf4e38f54,
         type: 3}
       propertyPath: par
-      value: 6
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1783849370952907231, guid: 3ef2e3826c2c08b47912ccfdf4e38f54,
         type: 3}
       propertyPath: nextLevel
       value: Level 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1783849370952907231, guid: 3ef2e3826c2c08b47912ccfdf4e38f54,
+        type: 3}
+      propertyPath: targetTime
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 1783849370952907231, guid: 3ef2e3826c2c08b47912ccfdf4e38f54,
+        type: 3}
+      propertyPath: targetSwitches
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ef2e3826c2c08b47912ccfdf4e38f54, type: 3}

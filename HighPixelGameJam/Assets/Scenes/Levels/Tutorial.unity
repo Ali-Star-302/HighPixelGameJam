@@ -504,6 +504,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e03be2793dc838d43ac6aa1ae73f10ad, type: 3}
+--- !u!114 &414492653 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3753262620628061983, guid: e03be2793dc838d43ac6aa1ae73f10ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 414492652}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &466596898
 GameObject:
   m_ObjectHideFlags: 0
@@ -735,6 +747,16 @@ PrefabInstance:
         type: 3}
       propertyPath: nextLevel
       value: Level 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1783849370952907231, guid: 3ef2e3826c2c08b47912ccfdf4e38f54,
+        type: 3}
+      propertyPath: targetTime
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1783849370952907231, guid: 3ef2e3826c2c08b47912ccfdf4e38f54,
+        type: 3}
+      propertyPath: targetSwitches
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ef2e3826c2c08b47912ccfdf4e38f54, type: 3}
@@ -1869,6 +1891,11 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 114727967}
+    - target: {fileID: 8158307428173405622, guid: ea8292e279252dd40ad9ce370bc561cf,
+        type: 3}
+      propertyPath: switchesText
+      value: 
+      objectReference: {fileID: 414492653}
     m_RemovedComponents:
     - {fileID: 6242317559165931045, guid: ea8292e279252dd40ad9ce370bc561cf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ea8292e279252dd40ad9ce370bc561cf, type: 3}
