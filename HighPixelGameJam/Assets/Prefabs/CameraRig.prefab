@@ -129,7 +129,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Ball: {fileID: 0}
   cam: {fileID: 2737085462644299967}
-  rotationSpeed: 0.2
+  rotationSpeed: 0.1
   baseOffset: {x: 0, y: 6, z: 15}
-  rotationSpeedDelay: 20
+  rotationSpeedDelay: 40
   maxRotSpeed: 2
+  rotationAcceleration: 0.01
+  obstructions: []
+  oldObstructions: []

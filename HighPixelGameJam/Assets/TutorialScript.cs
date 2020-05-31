@@ -25,10 +25,10 @@ public class TutorialScript : MonoBehaviour
         worldChangeCounter = golfBall.GetComponent<HittyBall>().worldChangeCounter;
         worldChangeDelay = golfBall.GetComponent<HittyBall>().worldChangeDelay;
 
-        if (Input.GetKeyDown("q") && stationary && worldChangeCounter >= worldChangeDelay && tutorialCounter == 1)
+        if (Input.GetKeyDown("q") && stationary && tutorialCounter == 1)
         {
             obstacleText.CrossFadeAlpha(1, 1, true);
-            obstacleText.text = "Well done, now finish the hole. If you need to reset your shot, press R.";
+            obstacleText.text = "Well done, now finish the hole. You can restart in the pause menu if needed.";
             tutorialCounter = 2;
             StartCoroutine(WaitThenFade());
         }

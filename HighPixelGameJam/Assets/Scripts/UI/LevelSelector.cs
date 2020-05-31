@@ -22,4 +22,9 @@ public class LevelSelector : MonoBehaviour
     {
         SceneManager.LoadScene(levelName);
     }
+
+    public void Back()
+    {
+        SceneManager.LoadScene("Main Menu");
+    }
 }

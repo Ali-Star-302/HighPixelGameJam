@@ -129,6 +129,7 @@ MonoBehaviour:
     type: 3}
   arrowBody: {fileID: 0}
   arrowHead: {fileID: 0}
+  maxRewinds: 5
   barMultiplier: 0.08
   arrowWidth: 3.5
   gradient:
@@ -161,7 +162,6 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   strokeCountText: {fileID: 0}
-  worldChangeText: {fileID: 0}
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
@@ -174,3 +174,6 @@ MonoBehaviour:
   isNormalWorld: 1
   changingObjects: {fileID: 0}
   stationary: 1
+  lastPositions: []
+  pauseMenuUI: {fileID: 7907359864433647771, guid: 19a98bd43c0637944b280d91111733ff,
+    type: 3}

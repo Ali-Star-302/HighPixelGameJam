@@ -8503,6 +8503,16 @@ PrefabInstance:
       propertyPath: par
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1783849370952907231, guid: 3ef2e3826c2c08b47912ccfdf4e38f54,
+        type: 3}
+      propertyPath: levelToUnlock
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1783849370952907231, guid: 3ef2e3826c2c08b47912ccfdf4e38f54,
+        type: 3}
+      propertyPath: nextLevel
+      value: Level Select
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ef2e3826c2c08b47912ccfdf4e38f54, type: 3}
 --- !u!1001 &443907678
@@ -10061,6 +10071,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d16828570ddaf3b4788d06605cd7854f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &500989221 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8988584763471914735, guid: e03be2793dc838d43ac6aa1ae73f10ad,
+    type: 3}
+  m_PrefabInstance: {fileID: 500989218}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &502415505
@@ -32512,6 +32534,11 @@ PrefabInstance:
       propertyPath: worldChangeBar
       value: 
       objectReference: {fileID: 2064872168}
+    - target: {fileID: 8158307428173405622, guid: ea8292e279252dd40ad9ce370bc561cf,
+        type: 3}
+      propertyPath: timerText
+      value: 
+      objectReference: {fileID: 500989221}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ea8292e279252dd40ad9ce370bc561cf, type: 3}
 --- !u!1 &1660167680 stripped

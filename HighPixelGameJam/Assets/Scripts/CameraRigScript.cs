@@ -12,6 +12,7 @@ public class CameraRigScript : MonoBehaviour
     public Vector3 baseOffset = new Vector3(0, 30, 20);
     public int rotationSpeedDelay;
     public float maxRotSpeed = 2f;
+    public float rotationAcceleration;
     public List<Transform> obstructions = new List<Transform>();
     public List<Transform> oldObstructions = new List<Transform>();
 
@@ -38,7 +39,7 @@ public class CameraRigScript : MonoBehaviour
 
         if (counter > rotationSpeedDelay && rotationSpeed < maxRotSpeed)
         {
-            rotationSpeed += 0.008f;
+            rotationSpeed += rotationAcceleration;
         }
     }
 

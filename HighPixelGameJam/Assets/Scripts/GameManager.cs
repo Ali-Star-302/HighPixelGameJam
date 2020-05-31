@@ -22,20 +22,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (SceneManager.GetActiveScene().name == "Level 1")
+        {
+            if (golfBall.transform.position.y <= -5)
+                golfBall.SendMessage("ResetBall");
+                    
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+    }
+
     public void FinishedLevel()
     {
         PlayerPrefs.SetInt("levelReached", levelToUnlock);
         GameObject ui = Instantiate(levelCompleteUI);
         //Gets all UI objects
-        GameObject titleText = ui.transform.GetChild(0).GetChild(0).gameObject;
-        GameObject scoreText = ui.transform.GetChild(0).GetChild(2).gameObject;
-        GameObject strokeText = ui.transform.GetChild(0).GetChild(3).gameObject;
-        GameObject parText = ui.transform.GetChild(0).GetChild(4).gameObject;
+        GameObject bg = ui.transform.GetChild(0).gameObject;
+        GameObject titleText = bg.transform.GetChild(0).gameObject;
+        GameObject star1 = bg.transform.GetChild(1).GetChild(0).gameObject;
+        GameObject star2 = bg.transform.GetChild(1).GetChild(1).gameObject;
+        GameObject star3 = bg.transform.GetChild(1).GetChild(2).gameObject;
+        GameObject scoreText = bg.transform.GetChild(2).gameObject;
+        GameObject strokeText = bg.transform.GetChild(3).gameObject;
+        GameObject parText = bg.transform.GetChild(4).gameObject;
+        GameObject timeText = bg.transform.GetChild(5).gameObject;
 
         titleText.GetComponent<Text>().text = "Level " + (levelToUnlock-1) + " Completed";
+        //Variables
         int strokeCount = golfBall.GetComponent<HittyBall>().strokeCount;
         int scoreDifference = strokeCount - par;
         string golfScore = "Par";
+        float levelTime = golfBall.GetComponent<HittyBall>().levelTime;
 
         //Golf score logic
         if (strokeCount == 1)
@@ -65,6 +83,7 @@ public class GameManager : MonoBehaviour
         scoreText.GetComponent<Text>().text = golfScore;
         strokeText.GetComponent<Text>().text = "Strokes: " + strokeCount;
         parText.GetComponent<Text>().text = "Par: " + par;
+        timeText.GetComponent<Text>().text = "Time" + levelTime;
     }
 
     

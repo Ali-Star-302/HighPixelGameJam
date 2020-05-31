@@ -9,10 +9,12 @@ public class HittyBall : MonoBehaviour
     public Sprite parallelToNormalImage;
     public Image arrowBody;
     public Image arrowHead;
+    public int maxRewinds;
     public float barMultiplier = 0.5f;
     public float arrowWidth = 5f;
     public Gradient gradient;
     public Text strokeCountText;
+    public Text timerText;
     public LayerMask groundLayer;
     public GameObject Cam;
     public int strokeCount;
@@ -23,6 +25,7 @@ public class HittyBall : MonoBehaviour
     public bool isNormalWorld = true;
     public GameObject changingObjects;
     public bool stationary = true;
+    public float levelTime;
 
     Quaternion originalRotation;
     Rigidbody rb;
@@ -30,12 +33,20 @@ public class HittyBall : MonoBehaviour
     bool powerUp = true;
     int maxPower = 100;
     GameObject arrow;
-    
+    Vector3 lastPosition;
+    float levelStartTime;
+
+    //Pausing variables
+    public GameObject pauseMenuUI;
+    bool paused = false;
+    GameObject ui;
+
     private void Start()
     {
+        levelStartTime = Time.time;
         worldChangeBar.SetMaxCharge(worldChangeDelay);
         powerBar.SetMaxPower(maxPower);
-        Physics.gravity *= 2;
+        Physics.gravity = Vector3.down*20;
         rb = GetComponent<Rigidbody>();
         originalRotation = transform.rotation;
         //arrow = transform.GetChild(0).gameObject;
@@ -44,14 +55,23 @@ public class HittyBall : MonoBehaviour
 
     void Update()
     {
+        Pausing();
+
+        if (paused)
+            return;
+
+        //Timer
+        levelTime = (Time.time - levelStartTime);
+        timerText.text = "Time: " + (int)(levelTime) + "s";
 
         //Stationary/not stationary
-        if (rb.velocity == Vector3.zero)
+        if (rb.velocity.sqrMagnitude <= 1)
         {
             stationary = true;
             arrowHead.enabled = true;
             arrowBody.enabled = true;
             arrow.SetActive(true);
+            lastPosition = transform.position;
         }
         else
         {
@@ -68,7 +88,88 @@ public class HittyBall : MonoBehaviour
             worldChangeCounter = 0;
         }
 
-        //Power and hitting
+        //Reset position
+        if (Input.GetKeyDown("r") && stationary)
+        {
+            transform.position = Vector3.zero;
+        }
+
+        Power();
+        UI();
+        Drag();
+        DisplayArrows();
+    }
+    
+    void HitBall()
+    {
+        Vector3 newRot = Vector3.ClampMagnitude(Cam.transform.rotation * new Vector3(0,0,1),1);
+        //transform.rotation = Quaternion.Euler(newRot);
+        Vector3 newForce = newRot * ((int)(power * 1.2));
+        newForce.y = 0;
+        rb.AddForce(newForce,ForceMode.Impulse);
+        power = 0;
+        strokeCount++;
+    }
+
+    void ResetBall()
+    {
+        transform.position = lastPosition;
+        rb.velocity = Vector3.zero;
+    }
+
+    void ChangeWorld()
+    {
+        if (isNormalWorld)
+        {
+            changingObjects.BroadcastMessage("NormalToParallel", SendMessageOptions.DontRequireReceiver);
+            isNormalWorld = false;
+        }
+        else
+        {
+            changingObjects.BroadcastMessage("ParallelToNormal", SendMessageOptions.DontRequireReceiver);
+            isNormalWorld = true;
+        }
+    }
+
+    void Pausing()
+    {
+        if (Input.GetButtonDown("Cancel"))
+        {
+            if (!paused)
+            {
+                ui = Instantiate(pauseMenuUI);
+                paused = true;
+            }
+            else
+            {
+                ui.BroadcastMessage("Resume");
+                paused = false;
+            }
+        }
+    }
+
+    void UI()
+    {
+        if (worldChangeCounter < worldChangeDelay)
+            worldChangeCounter++;
+
+        strokeCountText.text = "Count: " + strokeCount;
+        powerBar.SetPower((int)power);
+        worldChangeBar.SetCharge((int)worldChangeCounter);
+
+        if (isNormalWorld)
+            worldChangeBar.worldImage.sprite = normalToParallelImage;
+        else
+            worldChangeBar.worldImage.sprite = parallelToNormalImage;
+
+        if (stationary)
+            worldChangeBar.stationary = true;
+        else
+            worldChangeBar.stationary = false;
+    }
+
+    void Power()
+    {
         if (powerUp && power >= maxPower)
         {
             powerUp = false;
@@ -89,33 +190,18 @@ public class HittyBall : MonoBehaviour
         {
             HitBall();
         }
-        //UI updates
-        if (worldChangeCounter < worldChangeDelay)
-            worldChangeCounter++;
+    }
 
-        strokeCountText.text = "Count: " + strokeCount;
-        powerBar.SetPower((int)power);
-        worldChangeBar.SetCharge((int)worldChangeCounter);
-
-        if (isNormalWorld)
-            worldChangeBar.worldImage.sprite = normalToParallelImage;
-        else
-            worldChangeBar.worldImage.sprite = parallelToNormalImage;
-
-        if (stationary)
-            worldChangeBar.stationary = true;
-        else
-            worldChangeBar.stationary = false;
-
-        //Drag calculations
-        if (Physics.Raycast(transform.position,Vector3.down, 1f, groundLayer))
+    void Drag()
+    {
+        if (Physics.Raycast(transform.position, Vector3.down, 1f, groundLayer))
         {
             if (rb.velocity.sqrMagnitude < 1)
             {
                 rb.velocity = Vector3.zero;
                 transform.rotation = Quaternion.identity;
             }
-            else if(rb.velocity.sqrMagnitude < 12)
+            else if (rb.velocity.sqrMagnitude < 12)
             {
                 rb.drag = 1f;
             }
@@ -128,8 +214,10 @@ public class HittyBall : MonoBehaviour
         {
             rb.drag = 0f;
         }
+    }
 
-        //Arrows
+    void DisplayArrows()
+    {
         if (stationary)
         {
             if (power != 0)
@@ -138,6 +226,7 @@ public class HittyBall : MonoBehaviour
             }
             else
                 arrowHead.enabled = false;
+
             arrowBody.enabled = true;
             arrow.SetActive(true);
             Vector3 newLocalPos = Vector3.ClampMagnitude(Cam.transform.rotation * new Vector3(1, 0, 0), 1) * 15;
@@ -147,38 +236,12 @@ public class HittyBall : MonoBehaviour
             arrowBody.transform.LookAt(arrow.transform.position);
             arrowBody.transform.Rotate(new Vector3(90, 0, 0));
             arrowBody.rectTransform.sizeDelta = new Vector2(arrowWidth, power * barMultiplier);
-            arrowHead.transform.localPosition = Vector3.up * (power * (barMultiplier*0.96f));
+            arrowHead.transform.localPosition = Vector3.up * (power * (barMultiplier * 0.96f));
             arrowHead.transform.LookAt(arrow.transform.position);
             arrowHead.transform.Rotate(new Vector3(90, 0, 0));
 
-            arrowBody.color = gradient.Evaluate(power/100);
+            arrowBody.color = gradient.Evaluate(power / 100);
             arrowHead.color = gradient.Evaluate(power / 100);
         }
-    }
-
-    void ChangeWorld()
-    {
-        if (isNormalWorld)
-        {
-            changingObjects.BroadcastMessage("NormalToParallel", SendMessageOptions.DontRequireReceiver);
-            isNormalWorld = false;
-        }
-        else
-        {
-            changingObjects.BroadcastMessage("ParallelToNormal", SendMessageOptions.DontRequireReceiver);
-            isNormalWorld = true;
-        }
-    }
-
-
-    void HitBall()
-    {
-        Vector3 newRot = Vector3.ClampMagnitude(Cam.transform.rotation * new Vector3(0,0,1),1);
-        //transform.rotation = Quaternion.Euler(newRot);
-        Vector3 newForce = newRot * ((int)(power * 1.2));
-        newForce.y = 0;
-        rb.AddForce(newForce,ForceMode.Impulse);
-        power = 0;
-        strokeCount++;
     }
 }
